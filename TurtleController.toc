@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: |cff8dc63fTurtle|rController
+## Author: Ziggurat
+## Notes: A basic controller compatible UI
+## SavedVariablesPerCharacter: TurtleControllerConfig
+## Version: 0.1
+
+core.lua
+
+loot.lua
+ui.lua
