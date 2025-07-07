@@ -17,6 +17,9 @@ local frames = {
 	ShapeshiftBarRight,
 	MainMenuMaxLevelBar2,
 	MainMenuMaxLevelBar3,
+	ActionBarUpButton,
+	ActionBarDownButton,
+	MainMenuBarPageNumber,
 }
 
 local textures = {
@@ -30,6 +33,11 @@ local textures = {
 	ReputationXPBarTexture3,
 	SlidingActionBarTexture0,
 	SlidingActionBarTexture1,
+	MainMenuBarTexture0,
+	MainMenuBarTexture1,
+	MainMenuBarTexture2,
+	MainMenuBarTexture3,
+	MainMenuBarArtFrameBackground,
 }
 
 local normtextures = {
@@ -373,6 +381,30 @@ ui.manage_positions = function(a1, a2, a3)
 
 	MainMenuBarLeftEndCap:SetPoint("RIGHT", MainMenuBarArtFrame, "LEFT", 30, 0)
 	MainMenuBarRightEndCap:SetPoint("LEFT", MainMenuBarArtFrame, "RIGHT", -30, 0)
+
+	-- Move Latency meter
+	MainMenuBarPerformanceBar:ClearAllPoints()
+	MainMenuBarPerformanceBar:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -5, -5)
+	MainMenuBarPerformanceBar:SetHeight(MainMenuBarPerformanceBar:GetWidth())
+
+	-- Anchor bag buttons bottom-right with no gaps
+	local bagParent = UIParent
+	local bagAnchorX, bagAnchorY = -20, 20 -- distance from bottom-right corner
+
+	MainMenuBarBackpackButton:ClearAllPoints()
+	MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", bagParent, "BOTTOMRIGHT", bagAnchorX, bagAnchorY)
+
+	local prevButton = MainMenuBarBackpackButton
+	local buttonSpacing = 2 -- reduce spacing to fix gaps after texture removal
+
+	for i = 3, 0, -1 do
+		local bagSlot = _G["CharacterBag" .. i .. "Slot"]
+		if bagSlot then
+			bagSlot:ClearAllPoints()
+			bagSlot:SetPoint("RIGHT", prevButton, "LEFT", -buttonSpacing, 0)
+			prevButton = bagSlot
+		end
+	end
 
 	-- Hide Gargyles (configurable)
 	if HIDE_GARGOYLES then
