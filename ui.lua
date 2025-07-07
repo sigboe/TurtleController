@@ -389,13 +389,13 @@ ui.manage_positions = function(a1, a2, a3)
 
 	-- Anchor bag buttons bottom-right with no gaps
 	local bagParent = UIParent
-	local bagAnchorX, bagAnchorY = -20, 20 -- distance from bottom-right corner
+	local bagAnchorX, bagAnchorY = -10, 60 -- distance from bottom-right corner
 
 	MainMenuBarBackpackButton:ClearAllPoints()
 	MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", bagParent, "BOTTOMRIGHT", bagAnchorX, bagAnchorY)
 
 	local prevButton = MainMenuBarBackpackButton
-	local buttonSpacing = 2 -- reduce spacing to fix gaps after texture removal
+	local buttonSpacing = 0 -- reduce spacing to fix gaps after texture removal
 
 	for i = 3, 0, -1 do
 		local bagSlot = _G["CharacterBag" .. i .. "Slot"]
@@ -403,6 +403,33 @@ ui.manage_positions = function(a1, a2, a3)
 			bagSlot:ClearAllPoints()
 			bagSlot:SetPoint("RIGHT", prevButton, "LEFT", -buttonSpacing, 0)
 			prevButton = bagSlot
+		end
+	end
+
+	local microBarAnchorX, microBarAnchorY = -10, 20 -- same X, higher Y to be above bagbar
+
+	-- If you have the full microbar cluster, you may want to loop them like for bags
+	local microButtons = {
+		HelpMicroButton,
+		MainMenuMicroButton,
+		WorldMapMicroButton,
+		SocialsMicroButton,
+		QuestLogMicroButton,
+		TalentMicroButton,
+		SpellbookMicroButton,
+		CharacterMicroButton,
+	}
+
+	local prevMicro = nil
+	local microSpacing = 0 -- spacing to the left
+	for i, btn in ipairs(microButtons) do
+		btn:ClearAllPoints()
+		if i == 1 then
+			btn:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", microBarAnchorX, microBarAnchorY)
+			prevMicro = btn
+		elseif btn:IsShown() then
+			btn:SetPoint("RIGHT", prevMicro, "LEFT", -microSpacing, 0)
+			prevMicro = btn
 		end
 	end
 
