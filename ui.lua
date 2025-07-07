@@ -386,5 +386,28 @@ ui.manage_positions = function(a1, a2, a3)
 	end
 end
 
+-- Key Modifier Bar Switching
+local modifierWatcher = CreateFrame("Frame")
+modifierWatcher.lastPage = nil
+
+modifierWatcher:SetScript("OnUpdate", function()
+	local ctrl = IsControlKeyDown()
+	local shift = IsShiftKeyDown()
+
+	local page = 1
+	if ctrl and shift then
+		page = 4
+	elseif ctrl then
+		page = 2
+	elseif shift then
+		page = 3
+	end
+
+	if CURRENT_ACTIONBAR_PAGE ~= page then
+		CURRENT_ACTIONBAR_PAGE = page
+		ChangeActionBarPage()
+	end
+end)
+
 -- save to main frame
 TurtleController.ui = ui
