@@ -1,9 +1,9 @@
 <Bindings>
-  <!-- ShaguControl Custom Buttons -->
-  <Binding name="SHAGUCONTROL0" runOnUp="true" header="SHAGUCONTROL">ShaguControlButton(0)</Binding>
+  <!-- TurtleControl Custom Buttons -->
+  <Binding name="TURTLECONTROL0" runOnUp="true" header="TURTLECONTROL">TurtleControlButton(0)</Binding>
   
   <!-- UP: Inventory -->
-  <Binding name="SHAGUCONTROL1" runOnUp="true">
+  <Binding name="TURTLECONTROL1" runOnUp="true">
     if ( keystate == "down" ) then
       ToggleCharacter("PaperDollFrame")
       ToggleKeyRing()
@@ -12,14 +12,14 @@
   </Binding>
   
   <!-- RIGHT: QuestLog -->
-  <Binding name="SHAGUCONTROL2" runOnUp="true">
+  <Binding name="TURTLECONTROL2" runOnUp="true">
     if ( keystate == "down" ) then
       ToggleQuestLog()
     end
   </Binding>
   
   <!-- DOWN: Talents & Social -->
-  <Binding name="SHAGUCONTROL3" runOnUp="true">
+  <Binding name="TURTLECONTROL3" runOnUp="true">
     if ( keystate == "down" ) then
       ToggleTalentFrame()
       ToggleFriendsFrame()
@@ -27,7 +27,7 @@
   </Binding>
   
   <!-- LEFT: Spellbook -->
-  <Binding name="SHAGUCONTROL4" runOnUp="true">
+  <Binding name="TURTLECONTROL4" runOnUp="true">
     if ( keystate == "down" ) then
       ToggleSpellBook(BOOKTYPE_SPELL)
     end
