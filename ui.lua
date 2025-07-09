@@ -195,7 +195,6 @@ ui.manage_jump_button = function(self, frame)
 	end
 
 	name:SetPoint("BOTTOM", 0, 5)
-	name:SetText("Jump")
 	name.SetText = function()
 		return
 	end
@@ -211,30 +210,27 @@ end
 
 local buttonmap = {
 	-- dummy jump button
-	{ ActionButtonJmp, "BOTTOMRIGHT", -220, 45, "Interface\\AddOns\\TurtleController\\img\\a" },
+	{ ActionButtonJmp, "BOTTOMRIGHT", -420, 45, "Interface\\AddOns\\TurtleController\\img\\a" },
 
 	-- right controls
-	{ 1, "BOTTOMRIGHT", -220, 135, "Interface\\AddOns\\TurtleController\\img\\y" },
-	{ 2, "BOTTOMRIGHT", -265, 90, "Interface\\AddOns\\TurtleController\\img\\x" },
-	{ 3, "BOTTOMRIGHT", -175, 90, "Interface\\AddOns\\TurtleController\\img\\b" },
-	{ 4, "BOTTOMRIGHT", -220, 90, "" },
+	{ 1, "BOTTOMRIGHT", -465, 90, "Interface\\AddOns\\TurtleController\\img\\x" },
+	{ 2, "BOTTOMRIGHT", -420, 135, "Interface\\AddOns\\TurtleController\\img\\y" },
+	{ 3, "BOTTOMRIGHT", -375, 90, "Interface\\AddOns\\TurtleController\\img\\b" },
+
+	-- Bumpers
+	{ 4, "BOTTOMRIGHT", -420, 90, "Interface\\AddOns\\TurtleController\\img\\r1" },
+	{ 5, "BOTTOMLEFT", 420, 90, "Interface\\AddOns\\TurtleController\\img\\r2" },
 
 	-- left controls
-	{ 5, "BOTTOMLEFT", 220, 135, "Interface\\AddOns\\TurtleController\\img\\up" },
-	{ 6, "BOTTOMLEFT", 220, 90, "" },
-
-	-- This is my personal preference where the last 3 buttons of an actionbar
-	-- are usually mapped and mandatory skills for me. If you want to continue
-	-- the line, change this to 7,8,9 and change the disabled ones to 10,11,12.
-	-- also make sure to update the keybinds.lua accordingly.
-	{ 10, "BOTTOMLEFT", 265, 90, "Interface\\AddOns\\TurtleController\\img\\right" },
-	{ 11, "BOTTOMLEFT", 220, 45, "Interface\\AddOns\\TurtleController\\img\\down" },
-	{ 12, "BOTTOMLEFT", 175, 90, "Interface\\AddOns\\TurtleController\\img\\left" },
+	{ 6, "BOTTOMLEFT", 375, 90, "Interface\\AddOns\\TurtleController\\img\\left" },
+	{ 7, "BOTTOMLEFT", 420, 135, "Interface\\AddOns\\TurtleController\\img\\up" },
+	{ 8, "BOTTOMLEFT", 465, 90, "Interface\\AddOns\\TurtleController\\img\\right" },
+	{ 9, "BOTTOMLEFT", 420, 45, "Interface\\AddOns\\TurtleController\\img\\down" },
 
 	-- disabled
-	{ 7, "DISABLED" },
-	{ 8, "DISABLED" },
-	{ 9, "DISABLED" },
+	{ 10, "DISABLED" },
+	{ 11, "DISABLED" },
+	{ 12, "DISABLED" },
 }
 
 ui.manage_positions = function(a1, a2, a3)
@@ -424,6 +420,8 @@ ui.manage_positions = function(a1, a2, a3)
 	local microSpacing = 0 -- spacing to the left
 	for i, btn in ipairs(microButtons) do
 		btn:ClearAllPoints()
+		btn:SetWidth(29)
+		btn:SetHeight(58)
 		if i == 1 then
 			btn:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", microBarAnchorX, microBarAnchorY)
 			prevMicro = btn
@@ -450,23 +448,41 @@ local modifierWatcher = CreateFrame("Frame")
 modifierWatcher.lastPage = nil
 
 modifierWatcher:SetScript("OnUpdate", function()
-	local ctrl = IsControlKeyDown()
-	local shift = IsShiftKeyDown()
+	local ctrl = IsControlKeyDown() -- 001
+	local shift = IsShiftKeyDown() -- 010
+	--  local alt = IsAltKeyDown() -- 100
 
-	local page = 1
-	if ctrl and shift then
-		page = 4
-	elseif ctrl then
-		page = 2
-	elseif shift then
-		page = 3
-	end
+	local page = (ctrl and shift and 4) or (ctrl and 2) or (shift and 3) or 1
+	--  if alt and shift and ctrl then -- 111
+	--    page = 8
+	--  elseif alt and shift then -- 110
+	--    page = 7
+	--  elseif alt and ctrl then -- 101
+	--    page = 6
+	--  elseif alt then -- 100
+	--    page = 5
+	--  elseif shift and ctrl then -- 011
+	--    page = 4
+	--  elseif shift then -- 010
+	--    page = 3
+	--  elseif ctrl then -- 001
+	--    page = 2
+	--  else -- 000
+	--    page = 1
+	--  end
 
 	if CURRENT_ACTIONBAR_PAGE ~= page then
 		CURRENT_ACTIONBAR_PAGE = page
 		ChangeActionBarPage()
 	end
 end)
+
+-- unset bindings
+for i = 1, 9 do
+	--  SetBinding("ALT-" .. i)
+	SetBinding("SHIFT-" .. i)
+	SetBinding("CTRL-" .. i)
+end
 
 -- save to main frame
 TurtleController.ui = ui
