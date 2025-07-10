@@ -3,3 +3,4 @@ TurtleControllerConfig = {}
 
 BINDING_HEADER_TURTLECONTROL = "TurtleController Custom Buttons"
 HIDE_GARGOYLES = true
+HIDE_SHAPESHIFT = true

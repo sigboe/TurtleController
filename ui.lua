@@ -437,6 +437,17 @@ ui.manage_positions = function(a1, a2, a3)
 		hide(MainMenuBarRightEndCap)
 	end
 
+	-- Hide Shapeshiftbar
+	if HIDE_SHAPESHIFT then
+		hide(SHapeshiftBarFrame)
+		hide(ShapeshiftButton1)
+		hide(SHapeshiftButton2)
+		hide(SHapeshiftButton3)
+		hide(SHapeshiftButton4)
+		hide(SHapeshiftButton5)
+		hide(SHapeshiftButton6)
+	end
+
 	-- move pfQuest arrow if existing
 	if pfQuest and pfQuest.route and pfQuest.route.arrow then
 		pfQuest.route.arrow:SetPoint("CENTER", 0, -120)
